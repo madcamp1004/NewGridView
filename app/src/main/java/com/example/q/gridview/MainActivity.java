@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
         ImageAdapter.imageList.add(0, bitmap);
         strImgSet.add(ObjectSerializer.BitMapToString(bitmap));
         sharedPreferences.edit().putStringSet("images", strImgSet).apply();
+
     }
 
     @Override
@@ -245,7 +246,6 @@ public class MainActivity extends AppCompatActivity {
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
                 addNewBitmap(bitmap);
-                imgAdapter.notifyDataSetChanged();
 
 //                ImageView imageView = findViewById(R.id.myImage);
 //                imageView.setImageBitmap(bitmap);
@@ -265,6 +265,7 @@ public class MainActivity extends AppCompatActivity {
             // successfully captured the image
             // display it in image view
             previewCapturedImage();
+
         } else if (resultCode == RESULT_CANCELED) {
             // user cancelled Image capture
             Toast.makeText(getApplicationContext(),
@@ -276,6 +277,9 @@ public class MainActivity extends AppCompatActivity {
                     "Sorry! Failed to capture image", Toast.LENGTH_SHORT)
                     .show();
         }
+
+        imgAdapter.notifyDataSetChanged();
+        gridView.setAdapter(imgAdapter);
     }
     /**
      * Display image from gallery
